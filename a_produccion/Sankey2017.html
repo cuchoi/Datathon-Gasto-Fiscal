@@ -1,0 +1,200 @@
+<!DOCTYPE html PUBLIC "-//W3C//DTD XHTML 1.0 Strict//EN" "http://www.w3.org/TR/xhtml1/DTD/xhtml1-strict.dtd">
+<!-- saved from url=(0065)http://127.0.0.1:17108/custom/googleVis/SankeyID47c0663b1588.html -->
+<html xmlns="http://www.w3.org/1999/xhtml"><head>
+<meta http-equiv="Content-Type" content="text/html; charset=UTF-8">
+<title>SankeyID47c0663b1588</title>
+
+<style type="text/css">
+body {
+  color: #444444;
+  font-family: Arial,Helvetica,sans-serif;
+  font-size: 75%;
+  }
+  a {
+  color: #4D87C7;
+  text-decoration: none;
+}
+.google-visualization-tooltip-item:first-child {
+    content: '%';
+}
+</style>
+<script type="text/javascript" src="./Sankey2017_files/saved_resource"></script><link type="text/css" href="./Sankey2017_files/ui+es_419.css" rel="stylesheet"><script type="text/javascript" src="./Sankey2017_files/d3,d3sankey,format+es_419,default+es_419,ui+es_419,sankey+es_419.I.js.download"></script></head>
+<center>
+<b> Ingresos y Gastos 2017 (en billones de pesos)</b>
+<body>
+ <!-- Sankey generated in R 3.5.0 by googleVis 0.6.2 package -->
+<!-- Sat Aug 04 17:46:23 2018 -->
+
+
+<!-- jsHeader -->
+<script type="text/javascript">
+ 
+// jsData 
+function gvisDataSankeyID47c0663b1588 () {
+var data = new google.visualization.DataTable();
+var datajson =
+[
+ [
+"Cobre bruto",
+"Tesoro Público",
+0.9
+],
+[
+"Donaciones ",
+"Tesoro Público",
+0.1
+],
+[
+"Imposiciones previsionales",
+"Tesoro Público",
+2.63
+],
+[
+"Ingresos de operación",
+"Tesoro Público",
+0.95
+],
+[
+"Ingresos tributarios netos",
+"Tesoro Público",
+30.75
+],
+[
+"Otros ingresos",
+"Tesoro Público",
+1.34
+],
+[
+"Rentas de la propiedad ",
+"Tesoro Público",
+0.79
+],
+[
+"Tesoro Público",
+"Actividades Recreativas, Cultura y Religión",
+0.36
+],
+[
+"Tesoro Público",
+"Asuntos Económicos",
+5.14
+],
+[
+"Tesoro Público",
+"Defensa",
+1.49
+],
+[
+"Tesoro Público",
+"Educación",
+9.17
+],
+[
+"Tesoro Público",
+"Orden Público y Seguridad",
+2.95
+],
+[
+"Tesoro Público",
+"Protección del Medio Ambiente",
+0.16
+],
+[
+"Tesoro Público",
+"Protección Social",
+10.82
+],
+[
+"Tesoro Público",
+"Salud",
+8.48
+],
+[
+"Tesoro Público",
+"Servicios Públicos Generales",
+3.47
+],
+[
+"Tesoro Público",
+"Vivienda y Servicios Comunitarios",
+0.6
+] 
+];
+data.addColumn('string','From');
+data.addColumn('string','To');
+data.addColumn('number','Monto');
+data.addRows(datajson);
+return(data);
+}
+ 
+// jsDrawChart
+function drawChartSankeyID47c0663b1588() {
+var data = gvisDataSankeyID47c0663b1588();
+var options = {};
+options["width"] = 400;
+options["height"] = 400;
+options["sankey"] = {link: {color: { fill: '#1b4687' } },
+	                            node: { color: { fill: '#a61d4c' },
+	                            label: { color: '#000000' } }};
+
+
+    var chart = new google.visualization.Sankey(
+    document.getElementById('SankeyID47c0663b1588')
+    );
+    chart.draw(data,options);
+    
+}
+  
+ 
+// jsDisplayChart
+(function() {
+var pkgs = window.__gvisPackages = window.__gvisPackages || [];
+var callbacks = window.__gvisCallbacks = window.__gvisCallbacks || [];
+var chartid = "sankey";
+  
+// Manually see if chartid is in pkgs (not all browsers support Array.indexOf)
+var i, newPackage = true;
+for (i = 0; newPackage && i < pkgs.length; i++) {
+if (pkgs[i] === chartid)
+newPackage = false;
+}
+if (newPackage)
+  pkgs.push(chartid);
+  
+// Add the drawChart function to the global list of callbacks
+callbacks.push(drawChartSankeyID47c0663b1588);
+})();
+function displayChartSankeyID47c0663b1588() {
+  var pkgs = window.__gvisPackages = window.__gvisPackages || [];
+  var callbacks = window.__gvisCallbacks = window.__gvisCallbacks || [];
+  window.clearTimeout(window.__gvisLoad);
+  // The timeout is set to 100 because otherwise the container div we are
+  // targeting might not be part of the document yet
+  window.__gvisLoad = setTimeout(function() {
+  var pkgCount = pkgs.length;
+  google.load("visualization", "1", { packages:pkgs, callback: function() {
+  if (pkgCount != pkgs.length) {
+  // Race condition where another setTimeout call snuck in after us; if
+  // that call added a package, we must not shift its callback
+  return;
+}
+while (callbacks.length > 0)
+callbacks.shift()();
+} });
+}, 100);
+}
+ 
+// jsFooter
+</script>
+ 
+<!-- jsChart -->  
+<script type="text/javascript" src="./Sankey2017_files/jsapi"></script>
+ 
+<!-- divChart -->
+  
+<div id="SankeyID47c0663b1588" style="width: 400; height: 400;">
+</div>
+ 
+
+
+</body></center></html>
