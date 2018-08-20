@@ -15,8 +15,6 @@ iframe {
   color: #0099ff;
 }
 
-
-
 /* Gráfico Deuda Pública*/
 
 .axis{
@@ -85,6 +83,7 @@ iframe {
   font-size: 0.8em;
 }
 
+
 .tip {
   border-bottom: 1px dotted grey;
   position: relative;
@@ -107,7 +106,7 @@ iframe {
   border-radius: 0.5em;
 }
 
-.tip:hover span {
+a.tip:hover span {
   display: inline-block;
 }
 .sg-question-set,
