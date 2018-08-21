@@ -35,19 +35,28 @@ Chart.prototype.draw = function() {
     sel.html("");
 
     this.c = d3.conventions({
-      parentSel: sel, 
-      totalWidth: sel.node().offsetWidth, 
-      height: this.height, 
-      margin: {left: 50, right: 50, top: 10, bottom: 30}
-    });
+        parentSel: sel, 
+        totalWidth: 800, 
+        height: this.height, 
+        margin: {left: 50, right: 50, top: 10, bottom: 30}
+      });
 
     this.c.svg.enter().append('rect').at({width: self.c.width, height: self.c.height, opacity: 0});
 
     this.createScales();
+
     // Show presidential periods
     this.rectangulosPresidenciales();
-    this.area = d3.area().x(this.ƒ('year', this.c.x)).y0(this.ƒ('debt', this.c.y)).y1(this.c.height);
-    this.line = d3.area().x(this.ƒ('year', this.c.x)).y(this.ƒ('debt', this.c.y));
+
+    this.area = d3.area()
+        .x(this.ƒ('year', this.c.x))
+        .y0(this.ƒ('debt', this.c.y))
+        .y1(this.c.height);
+
+    this.line = d3.area()
+        .x(this.ƒ('year', this.c.x))
+        .y(this.ƒ('debt', this.c.y));
+
     this.addLine();
     this.yourDataSel = this.c.svg.append('path.your-line');
     this.addAxes();
@@ -81,6 +90,10 @@ Chart.prototype.rectangulosPresidenciales = function(){
     if(this.bachelet1){
         var year1 = 2006;
         var year2 = 2010;
+
+        console.log(c.x)
+        console.log(c.x(year2));
+        console.log(c.x(year1));
 
         console.log(c.x(year2) - c.x(year1));
 
@@ -142,9 +155,9 @@ Chart.prototype.addLine = function(){
     var c = this.c;
 
     this.clipRect = c.svg
-    .append('clipPath#clip')
-    .append('rect')
-    .at({width: c.x(this.breakYear) - 2, height: c.height});
+        .append('clipPath#clip')
+        .append('rect')
+        .at({width: c.x(this.breakYear) - 2, height: c.height});
 
     var correctSel = c.svg.append('g').attr('clip-path', 'url(#clip)');
     correctSel.append('path.area').at({d: self.area(this.data)});
@@ -160,24 +173,23 @@ Chart.prototype.addLine = function(){
         .attr("y", c.y(this.debtBreakYear)-15)
         .attr("dy", ".35em")
         .text(this.debtBreakYear+"%");
-}
+};
 
 // the following are "public methods"
 // which can be used by code outside of this file
 Chart.prototype.setColor = function(newColor) {
-
     this.plot.select('.line').style('stroke',newColor);
 
     // store for use when redrawing
     this.lineColor = newColor;
-}
+};
 
 Chart.prototype.setData = function(newData) {
     this.data = newData;
     
     // full redraw needed
     this.draw();
-}
+};
 
 Chart.prototype.setCompleted = function(comp) {
     this.completed = comp;
@@ -187,11 +199,8 @@ Chart.prototype.setCompleted = function(comp) {
       .attr('pointer-events','none')
       .text('Rellena el gráfico...');
 
-    console.log(this.line);
-    this.draw();
-
-    // full redraw needed
-}
+    this.draw(); // full redraw needed
+};
 
 Chart.prototype.dragDraw = function(element_selector){
     var self = this;
@@ -205,11 +214,15 @@ Chart.prototype.dragDraw = function(element_selector){
         .at({opacity: 0, dy: '0.33em', x: 10, textAnchor: 'start', fill: this.color});
 
     var yourData = this.data
-    .map(function(d){ return {year: d.year, debt: d.debt, defined: 0} })
-    .filter(function(d){
-        if (d.year == self.breakYear) d.defined = true
-            return d.year >= self.breakYear
-    });
+        .map(function(d){ 
+            return {year: d.year, debt: d.debt, defined: 0} })
+        .filter(function(d){
+            if (d.year == self.breakYear){
+                d.defined = true
+            };
+
+            return d.year >= self.breakYear;
+        });
 
     self.completed = false;
     llegoUltimoAno = false;
@@ -252,54 +265,54 @@ Chart.prototype.dragDraw = function(element_selector){
               .style('opacity', 1)
               .attr('pointer-events','all')
               .text('Revisa tu respuesta');
-            }
+            };
 
           var yTickFormat = function(d){ return d3.round(d,1) + '%' };
-          yourDataTextSel
-          .at({opacity: 1, x: self.c.x(year) - 10, y: self.c.y(debt) - 20})
-          .text(yTickFormat(debt));
-     }) ;// End on drag
+          yourDataTextSel.at({opacity: 1, x: self.c.x(year) - 10, y: self.c.y(debt) - 20})
+                         .text(yTickFormat(debt));
+     }); // End on drag
 
     self.c.svg.call(drag);
-}
+};
 
 Chart.prototype.animateData = function(){
-    var clipRect = this.clipRect
-    var c = this.c
-    var maxYear = this.maxYear
-    var data = this.data
+    var clipRect = this.clipRect;
+    var c = this.c;
+    var maxYear = this.maxYear;
+    var data = this.data;
 
     if (this.completed){
-    clipRect.transition()
-         .duration(1000)
-         .attr('width', c.x(maxYear))
+        clipRect.transition()
+             .duration(1000)
+             .attr('width', c.x(maxYear));
 
-    // Dibujar punto del último año Bachelet
-    var lastYearBachelet = c.svg.append('circle')
-    .at({r: 5, fill: '#1d428a', opacity: 1, cx: c.x(maxYear)}).attr("cy", c.y(data[data.length-1]["debt"]))
-    
-    var lastYearBachelet = c.svg.append('text')
-    .at({fill: '#1d428a', opacity: 1, x: c.x(maxYear+0.1)})
-    .attr("y", c.y(data[data.length-1]["debt"]))
-    .attr("dy", ".35em")
-    .text(data[data.length-1]["debt"]+"%")
+        // Dibujar punto del último año Bachelet
+        var lastYearBachelet = c.svg.append('circle')
+            .at({r: 5, fill: '#1d428a', opacity: 1, cx: c.x(maxYear)})
+            .attr("cy", c.y(data[data.length-1]["debt"]));
+        
+        var lastYearBachelet = c.svg.append('text')
+            .at({fill: '#1d428a', opacity: 1, x: c.x(maxYear+0.1)})
+            .attr("y", c.y(data[data.length-1]["debt"]))
+            .attr("dy", ".35em")
+            .text(data[data.length-1]["debt"]+"%");
 
-    // Dibujar punto del último año Piñera
-    var debtLastYearPinera = data[this.bisect(data, 2014)].debt
+        // Dibujar punto del último año Piñera
+        var debtLastYearPinera = data[this.bisect(data, 2014)].debt;
 
-    var lastYearPinera = c.svg.append('circle')
-    .at({r: 5, fill: '#1d428a', opacity: 1, cx: c.x(2014)}).attr("cy", c.y(debtLastYearPinera))
-    
-    var lastYearPinera = c.svg.append('text')
-    .at({fill: '#1d428a', opacity: 1, x: c.x(2014)})
-    .attr("y", c.y(debtLastYearPinera)-15)
-    .attr("dy", ".35em")
-    .text(debtLastYearPinera+"%")
-    }
+        var lastYearPinera = c.svg.append('circle')
+            .at({r: 5, fill: '#1d428a', opacity: 1, cx: c.x(2014)})
+            .attr("cy", c.y(debtLastYearPinera));
+        
+        var lastYearPinera = c.svg.append('text')
+            .at({fill: '#1d428a', opacity: 1, x: c.x(2014)})
+            .attr("y", c.y(debtLastYearPinera)-15)
+            .attr("dy", ".35em")
+            .text(debtLastYearPinera+"%");  
+    };
 
     // Remove floating text
     //this.c.svg.select('text.g-y-num').attr('opacity', '0');
-
-}
+};
 
 function clamp(a, b, c){ return Math.max(a, Math.min(b, c)) }
