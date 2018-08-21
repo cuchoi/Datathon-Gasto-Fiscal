@@ -2,7 +2,6 @@ svg{
 	overflow: visible;
 }
 
-
 iframe {
   border: none;
   display:block;
@@ -122,22 +121,22 @@ a.tip:hover span {
 
 @media (max-width: 978px) {
     .container {
-      padding:0;
-      margin:0;
+      padding:0 !important;
+      margin:0 !important;
     }
 
         .section {
-      padding:5px 5px 5px 5px;
-      margin:0;
+      padding:5px 5px 5px 5px !important;
+      margin:0 !important;
     }
 
     body {
-      padding:0;
+      padding:0 !important;
     }
 
     .navbar-fixed-top, .navbar-fixed-bottom, .navbar-static-top {
-      margin-left: 0;
-      margin-right: 0;
-      margin-bottom:0;
+      margin-left: 0 !important;
+      margin-right: 0 !important;
+      margin-bottom:0 !important;
     }
 }
